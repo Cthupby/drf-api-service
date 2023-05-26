@@ -1,0 +1,30 @@
+version: "3.3"
+
+services:
+  db:
+    image: postgres
+    container_name: drf-db
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+  api:
+    image: drf_api_service
+    container_name: drf-api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  start_api:
+    image: drf_api_service
+    container_name: drf_start_api
+    command: python manage.py migrate
+    volumes:
+      - .:/code
+    depends_on:
+      - db
