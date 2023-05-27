@@ -23,8 +23,18 @@ services:
   start_api:
     image: drf_api_service
     container_name: drf_start_api
-    command: python manage.py migrate
+    command: 
+      sh -c "python manage.py migrate && python manage.py start_api"
     volumes:
       - .:/code
     depends_on:
       - db
+  #redis:
+  #  image: redis
+  #celery:
+  #  image: drf_api_service
+  #  command: celery -A config worker -l info
+  #  volumes:
+  #    - .:/code
+  #  depends_on:
+  #    - redis
