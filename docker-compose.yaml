@@ -22,7 +22,7 @@ services:
       - db
   start_api:
     image: drf_api_service
-    container_name: drf_start_api
+    container_name: drf-start-api
     command: 
       sh -c "python manage.py migrate && python manage.py start_api"
     volumes:
