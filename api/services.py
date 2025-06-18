@@ -13,7 +13,7 @@ def check_float(cell):
     return True
 
 
-def add_locations():
+def add_location():
     locations_csv = f"{BASE_DIR}/api/uszips.csv"
     with open(locations_csv) as f:
         reader_f = csv.reader(f)
@@ -33,11 +33,12 @@ def add_locations():
                 )
 
 
-def add_cars():
-    char = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+def add_car():
+    chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     location = Location.objects.all()
     for car in range(1, 20):
-        car_number = f"{random.randint(1000, 9999)}{random.choice(char)}"
+        number, char = random.randint(1000, 9999), random.choice(char)
+        car_number = f"{number}{char}"
         location = random.choice(location) if location else None
         load_capacity = random.randint(1, 1000)
         car = Car.objects.create(
